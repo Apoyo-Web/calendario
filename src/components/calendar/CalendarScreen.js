@@ -9,6 +9,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Navbar } from '../ui/Navbar'
 import { messages } from '../../helpers/Calendar-messafes-es';
 import { CalendarEvent } from './CalendarEvent';
+import { CalendarModal } from './CalendarModal';
 
 moment.locale('es')
 const localizer = momentLocalizer(moment)
@@ -64,7 +65,7 @@ export const CalendarScreen = () => {
                 events={events}
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 500 }}
+                style={{ height: "90vh" }}
                 messages={messages}
                 eventPropGetter={eventStyleGetter}
                 onDoubleClickEvent={onDoubleClick}
@@ -76,7 +77,8 @@ export const CalendarScreen = () => {
                 }}
 
                 
-    />
+            />
+            <CalendarModal />
         </div>
     )
 }
