@@ -37,3 +37,11 @@
   outline: none;
   padding: 10px;
 }
+
+.react-datime-picker input:focus {
+  outline: none;
+}
+
+.react-datetime-picker__wrapper {
+  border: 0px solid gray !important;
+}
