@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { CalendarApp } from './CalendarApp';
 
-import { AppRouter } from './router/AppRouter';
+
 
 
 ReactDOM.render(
   
-    <AppRouter />,
+    <CalendarApp />,
   
   document.getElementById('root')
 );
