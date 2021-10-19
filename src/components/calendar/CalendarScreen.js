@@ -12,6 +12,7 @@ import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 import { useDispatch } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
+import { eventSetActive } from '../../actions/events';
 
 
 
@@ -41,7 +42,7 @@ export const CalendarScreen = () => {
     }
 
     const onSelectEvent = (e) => {
-        console.log(e)
+        dispatch(eventSetActive(e))
     }
     const onViewChange = (e) => {
         setLastView(e)
