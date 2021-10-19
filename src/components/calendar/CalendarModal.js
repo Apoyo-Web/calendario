@@ -5,16 +5,21 @@ import Swal from 'sweetalert2'
 import { customStyles } from '../../helpers/customStyleModal';
 import './modal.css'
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { uiCloseModal } from '../../actions/ui';
 
 
 
 Modal.setAppElement('#root');
 export const CalendarModal = () => {
 
+    const dispatch = useDispatch()
     const now = moment().minute(0).seconds(0).add(1, 'hours')
     const endDate = now.clone().add(1,'hours')
   
-    const [isOpen, setIsOpen] = useState(true)
+    const open = useSelector(state => state.ui.modalOpen)
+    console.log (open)
+    
     const [dateStart, setDateStart] = useState(now.toDate());
     const [dateEnd, setDateEnd] = useState(endDate.toDate());
     const [titleValid, setTitleValid] = useState(true)  
@@ -36,7 +41,7 @@ export const CalendarModal = () => {
         })
     }
     const closeModal = () => {
-        setIsOpen(false)
+        dispatch(uiCloseModal())
     }
 
     const handleStartDateChange = (e) => {
@@ -79,7 +84,7 @@ export const CalendarModal = () => {
     }
     return (
         <Modal
-        isOpen={true}
+        isOpen={open}
         
         onRequestClose={closeModal}
             style={customStyles}
