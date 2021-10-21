@@ -7,6 +7,7 @@ import './modal.css'
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
+import { eventAddNew, eventSetActive } from '../../actions/events';
 
 
 
@@ -32,7 +33,7 @@ export const CalendarModal = () => {
         end: endDate.toDate()
     })
 
-    const {notes, title, start, end} = formValues
+    const {title, start, end} = formValues
 
     const handleOnChange = ({target}) => {
         setFormValues({
@@ -77,6 +78,16 @@ export const CalendarModal = () => {
             return setTitleValid(false)
         }
 
+        dispatch(eventAddNew({
+            ...formValues,
+            id: new Date().getTime(),
+            user: {
+                _id: '123',
+                name: 'Fernando'
+
+            }
+        }))
+        
         setTitleValid(true)
 
         closeModal()
