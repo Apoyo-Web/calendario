@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal';
 import DateTimePicker from 'react-datetime-picker';
 import Swal from 'sweetalert2'
@@ -7,33 +7,40 @@ import './modal.css'
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiCloseModal } from '../../actions/ui';
-import { eventAddNew, eventSetActive } from '../../actions/events';
+import { eventAddNew, eventClearActive, eventSetActive } from '../../actions/events';
 
-
-
+const now = moment().minute(0).seconds(0).add(1, 'hours')
+    const endDate = now.clone().add(1,'hours')
+const initEvent = {
+    title: '',
+    notes: '',
+    start: now.toDate(),
+    end: endDate.toDate()
+}
 Modal.setAppElement('#root');
 export const CalendarModal = () => {
 
     const dispatch = useDispatch()
-    const now = moment().minute(0).seconds(0).add(1, 'hours')
-    const endDate = now.clone().add(1,'hours')
+    
   
     const open = useSelector(state => state.ui.modalOpen)
-    console.log (open)
+    const {activeEvent} = useSelector(state => state.calendar)
+    
     
     const [dateStart, setDateStart] = useState(now.toDate());
     const [dateEnd, setDateEnd] = useState(endDate.toDate());
     const [titleValid, setTitleValid] = useState(true)  
 
-    const [formValues, setFormValues] = useState({
-        
-        title: 'Evento',
-        notes: '',
-        start: now.toDate(),
-        end: endDate.toDate()
-    })
+    const [formValues, setFormValues] = useState(initEvent)
 
-    const {title, start, end} = formValues
+    const { title, start, end } = formValues
+    
+    useEffect(() => {
+        
+        if (activeEvent) {
+            setFormValues(activeEvent)
+        }
+    }, [activeEvent])
 
     const handleOnChange = ({target}) => {
         setFormValues({
@@ -43,6 +50,8 @@ export const CalendarModal = () => {
     }
     const closeModal = () => {
         dispatch(uiCloseModal())
+        dispatch(eventClearActive())
+        setFormValues(initEvent)
     }
 
     const handleStartDateChange = (e) => {
